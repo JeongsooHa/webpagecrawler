@@ -3,12 +3,12 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE","crawler_django.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE","websaver.settings")
 
 import django
 django.setup()
 
-from parsed_data.models import SDsaramData
+from parsed_data.models import BlogData
 
 def parse_blog():
     req = requests.get('http://www.sdsaram.com/bbs/board.php?bo_table=board&sca=%EB%A0%8C%ED%8A%B8')
@@ -29,4 +29,4 @@ def parse_blog():
 if __name__=='__main__':
     blog_data_dict = parse_blog()
     for t, l in blog_data_dict.items():
-        SDsaramData(title=t).save()
+        BlogData(title=t, link=l).save()
